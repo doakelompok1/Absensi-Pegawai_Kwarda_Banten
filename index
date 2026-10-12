@@ -453,6 +453,69 @@
     .hidden {
       display: none !important;
     }
+/* PILIHAN SHIFT */
+.shift-section {
+  margin-top: 18px;
+  padding: 15px;
+  background: #f7efe4;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+}
+
+.shift-title {
+  margin: 0 0 6px;
+  color: var(--brown-dark);
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.shift-description {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.shift-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.shift-option {
+  display: block;
+  padding: 13px 10px;
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--cream-light);
+  cursor: pointer;
+  text-align: center;
+}
+
+.shift-option:has(input:checked) {
+  border-color: var(--green);
+  background: #e9eddf;
+}
+
+.shift-option input {
+  width: auto;
+  margin: 0 0 8px;
+  accent-color: var(--green);
+}
+
+.shift-option strong {
+  display: block;
+  color: var(--brown-dark);
+  font-size: 13px;
+}
+
+.shift-option small {
+  display: block;
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 11px;
+}
 
     hr {
       border: 0;
@@ -662,11 +725,32 @@
     <button id="checkBtn" onclick="checkEmployee()">⚜️ &nbsp; Cek Karyawan</button>
 
     <div id="employee" class="hidden">
-      <hr>
-      <p class="name" id="empName"></p>
-      <p id="empDivision"></p>
-      <p class="muted" id="empStatus"></p>
+  <hr>
+  <p class="name" id="empName"></p>
+  <p id="empDivision"></p>
+  <p class="muted" id="empStatus"></p>
+
+  <div class="shift-section">
+    <p class="shift-title">Pilih Shift Kerja</p>
+    <p class="shift-description">
+      Pilih shift yang sesuai dengan jadwal kerja kamu.
+    </p>
+
+    <div class="shift-options">
+      <label class="shift-option">
+        <input type="radio" name="shift" value="shift1">
+        <strong>Shift 1</strong>
+        <small>07.00–15.00</small>
+      </label>
+
+      <label class="shift-option">
+        <input type="radio" name="shift" value="shift2">
+        <strong>Shift 2</strong>
+        <small>09.00–17.00</small>
+      </label>
     </div>
+  </div>
+</div>
   </section>
 
   <!-- 2. SELFIE -->
@@ -1004,7 +1088,12 @@ function toggleNikVisibility() {
       setStatus("Lengkapi NIK, kamera, selfie, dan GPS terlebih dahulu.");
       return;
     }
+const selectedShift = document.querySelector('input[name="shift"]:checked');
 
+if (!selectedShift) {
+  setStatus("Pilih Shift 1 atau Shift 2 terlebih dahulu.");
+  return;
+}
     const inBtn = document.getElementById("inBtn");
     const outBtn = document.getElementById("outBtn");
 
@@ -1015,14 +1104,15 @@ function toggleNikVisibility() {
 
     const backendType = type === "masuk" ? "belum_masuk" : "sudah_masuk";
 
-    const data = {
-      action: "submit",
-      id: employee.id,
-      type: backendType,
-      foto: photoData,
-      lat: locationData.lat,
-      lng: locationData.lng
-    };
+   const data = {
+  action: "submit",
+  id: employee.id,
+  type: backendType,
+  foto: photoData,
+  lat: locationData.lat,
+  lng: locationData.lng,
+  shift: selectedShift.value
+};
 
     try {
       const response = await fetch(API_URL, {
