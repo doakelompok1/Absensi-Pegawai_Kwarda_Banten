@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#4a3024">
-  <title>Absensi Karyawan | Kwarda Banten</title>
+  <title>Absensi Pegawai | Kwarda Banten</title>
 
   <style>
     :root {
@@ -665,7 +665,7 @@
       </div>
     </div>
 
-    <h1>Absensi<br>Karyawan</h1>
+    <h1>Absensi<br>Pegawai</h1>
     <p>Disiplin, tanggung jawab, dan semangat mengabdi. Silakan lakukan absensi harian.</p>
 
     <div class="motto">Satyaku Kudarmakan · Darmaku Kubaktikan</div>
@@ -688,11 +688,11 @@
       <div class="step-icon" aria-hidden="true">♙</div>
       <div>
         <div class="step-label">Langkah 01</div>
-        <h2>Identitas Karyawan</h2>
+        <h2>Identitas Pegawai</h2>
       </div>
     </div>
 
-    <label for="nik">Nomor Induk Karyawan (NIK)</label>
+    <label for="nik">Nomor Induk Pegawai (NIK)</label>
 
 <div class="nik-input-wrap">
   <input
@@ -722,7 +722,7 @@
   </button>
 </div>
 
-    <button id="checkBtn" onclick="checkEmployee()">⚜️ &nbsp; Cek Karyawan</button>
+    <button id="checkBtn" onclick="checkEmployee()">⚜️ &nbsp; Cek Pegawai</button>
 
     <div id="employee" class="hidden">
   <hr>
@@ -877,7 +877,7 @@ function toggleNikVisibility() {
     ? '<path d="M3 3l18 18"/><path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"/><path d="M9.9 5.2A11 11 0 0 1 12 5c6.5 0 10 7 10 7a15 15 0 0 1-4 4.8"/><path d="M6.2 6.2C3.5 8 2 12 2 12s3.5 7 10 7c1 0 2-.2 2.9-.5"/>'
     : '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>';
 }
-  // CEK KARYAWAN
+  // CEK PEGAWAI
   async function checkEmployee() {
     const nik = document.getElementById("nik").value.trim();
     const btn = document.getElementById("checkBtn");
@@ -901,7 +901,7 @@ function toggleNikVisibility() {
     document.getElementById("retakeBtn").classList.add("hidden");
 
     updateButtons();
-    setStatus("Memeriksa data karyawan...");
+    setStatus("Memeriksa data pegawai...");
 
     try {
       const url = API_URL + "?action=getEmployee&nik=" + encodeURIComponent(nik);
@@ -914,7 +914,7 @@ function toggleNikVisibility() {
       const result = await response.json();
 
       if (!result.success || !result.data) {
-        setStatus(result.message || "Data karyawan tidak ditemukan.");
+        setStatus(result.message || "Data pegawai tidak ditemukan.");
         return;
       }
 
@@ -927,7 +927,7 @@ function toggleNikVisibility() {
         "Status absensi: " + (result.status || "-");
 
       document.getElementById("employee").classList.remove("hidden");
-      setStatus("Data karyawan ditemukan!");
+      setStatus("Data pegawai ditemukan!");
 
     } catch (error) {
       setStatus("Gagal mengakses API: " + error.message);
